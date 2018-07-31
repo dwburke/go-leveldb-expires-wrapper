@@ -36,6 +36,7 @@ func Get(ldb *leveldb.DB, key string) ([]byte, error) {
 	secs := time.Now().Unix()
 
 	if cache.Expires > 0 && cache.Expires <= secs {
+		ldb.Delete([]byte(key), nil)
 		return nil, nil
 	}
 
