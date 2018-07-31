@@ -1,4 +1,4 @@
-package cmd
+package cache
 
 import (
 	"encoding/json"
