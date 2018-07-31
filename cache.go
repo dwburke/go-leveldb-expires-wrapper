@@ -14,7 +14,7 @@ type CacheType struct {
 	Expires int64  `json:"expires"`
 }
 
-func CacheGet(ldb *leveldb.DB, key string) ([]byte, error) {
+func Get(ldb *leveldb.DB, key string) ([]byte, error) {
 
 	data, err := ldb.Get([]byte(key), nil)
 
@@ -46,7 +46,7 @@ func CacheGet(ldb *leveldb.DB, key string) ([]byte, error) {
 	return cache.Data, nil
 }
 
-func CacheSet(ldb *leveldb.DB, key string, value string, expires int64) error {
+func Set(ldb *leveldb.DB, key string, value string, expires int64) error {
 	cache := CacheType{Data: []byte(value), Created: time.Now().Unix(), Expires: 0}
 
 	if expires > 0 {
