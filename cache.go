@@ -18,11 +18,7 @@ func Get(ldb *leveldb.DB, key string) ([]byte, error) {
 
 	data, err := ldb.Get([]byte(key), nil)
 
-	if err != nil {
-		if err != leveldb_errors.ErrNotFound {
-			return nil, err
-		}
-
+	if err != nil && err != leveldb_errors.ErrNotFound {
 		return nil, err
 	}
 
