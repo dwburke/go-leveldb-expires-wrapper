@@ -2,7 +2,6 @@ package cache
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/syndtr/goleveldb/leveldb"
@@ -35,15 +34,12 @@ func CacheGet(ldb *leveldb.DB, key string) ([]byte, error) {
 	err = json.Unmarshal(data, &cache)
 
 	if err != nil {
-		// no value printing errors here, much cache won't conform atm (legacy data)
-		//fmt.Println("Bad cache:", err)
 		return nil, nil
 	}
 
 	secs := time.Now().Unix()
 
 	if cache.Expires > 0 && cache.Expires <= secs {
-		fmt.Println("Cache expired:", key, secs-cache.Expires)
 		return nil, nil
 	}
 
