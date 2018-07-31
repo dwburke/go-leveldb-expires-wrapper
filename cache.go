@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dwburke/dburke-things/tools"
 	"github.com/syndtr/goleveldb/leveldb"
 	leveldb_errors "github.com/syndtr/goleveldb/leveldb/errors"
 )
@@ -22,7 +21,7 @@ func CacheGet(ldb *leveldb.DB, key string) ([]byte, error) {
 
 	if err != nil {
 		if err != leveldb_errors.ErrNotFound {
-			tools.FatalError(err)
+			return nil, err
 		}
 
 		return nil, err
@@ -61,7 +60,6 @@ func CacheSet(ldb *leveldb.DB, key string, value string, expires int64) error {
 	json_string, err := json.Marshal(cache)
 
 	err = ldb.Put([]byte(key), []byte(json_string), nil)
-	tools.FatalError(err)
 
 	return err
 }
